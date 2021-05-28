@@ -3,9 +3,9 @@ package com.example.productsapi;
 import org.jetbrains.annotations.NotNull;
 
 public class ProductEntity {
-    public int id;
-    public static String name;
-    public double value, quantity;
+    private int id;
+    private String name;
+    private double value, quantity;
 
     @Override
     public @NotNull String toString() {
@@ -24,12 +24,12 @@ public class ProductEntity {
         this.id = id;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static void setName(String name) {
-        ProductEntity.name = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getValue() {

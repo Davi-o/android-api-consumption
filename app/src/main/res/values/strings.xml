@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ProductsApi</string>
+    <string name="add_product">Add new product</string>
+    <string name="close_app">Close the app(?)</string>
+    <string name="hint_name">Product name here</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="name_is_empty">Please, insert the product name</string>
+    <string name="hint_value">Insert the product value here</string>
+    <string name="hint_quantity">Insert the product quantity</string>
+
 </resources>
