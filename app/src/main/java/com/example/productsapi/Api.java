@@ -32,10 +32,11 @@ abstract class Api {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content=Type","application/x-www-form-urlencoded");
             connection.setRequestProperty("Content=Type","application/x-www-form-urlencoded");
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(false);
             connection.setRequestProperty("charset","utf-8");
+            connection.setRequestMethod("POST");
+            connection.setUseCaches(false);
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
 
             DataOutputStream output = new DataOutputStream(connection.getOutputStream());
             output.writeBytes(Arrays.toString(request));

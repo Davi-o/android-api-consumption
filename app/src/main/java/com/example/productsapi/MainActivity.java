@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,7 +21,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,20 +66,14 @@ public class MainActivity extends AppCompatActivity {
         alert.setIcon(android.R.drawable.ic_menu_add);
 
         EditText nameInput = new EditText(this);
-        EditText valueInput = new EditText(this);
-        EditText quantityInput = new EditText(this);
 
         nameInput.setHint(R.string.hint_name);
-        valueInput.setHint(R.string.hint_value);
-        quantityInput.setHint(R.string.hint_quantity);
 
         alert.setView(nameInput);
 
         alert.setNeutralButton(R.string.cancel,null);
         alert.setPositiveButton(R.string.submit, (dialog, which) -> {
             String name = nameInput.getText().toString();
-            double value = Double.parseDouble(valueInput.getText().toString());
-            int quantity = Integer.parseInt(quantityInput.getText().toString());
 
             if (name.isEmpty()) {
                 Toast.makeText(
@@ -90,13 +82,8 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG
                 ).show();
             } else {
-                ProductEntity product = new ProductEntity();
-
-                product.setName(name);
-                product.setValue(value);
-                product.setQuantity(quantity);
-
-                Toast.makeText(this, String.valueOf(which), Toast.LENGTH_SHORT).show();
+                ProductAdd productAdd = new ProductAdd();
+                productAdd.execute("nome="+ name  + "&preco=1.5&quantidade=1.0");
             }
         });
         alert.show();
@@ -133,6 +120,53 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return products;
+    }
+
+    private class ProductAdd extends AsyncTask<String,String, String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            bar.setActivated(true);
+            bar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            super.onPostExecute(response);
+            if (response != null) {
+                try {
+                    JSONObject formattedResponse = new JSONObject(response);
+                     int id = formattedResponse.getInt("id");
+                     if (id > 0) {
+                         Toast.makeText(
+                                 MainActivity.this,
+                                 R.string.insert_successful,
+                                 Toast.LENGTH_LONG
+                         ).show();
+                     } else {
+                         Toast.makeText(
+                                 MainActivity.this,
+                                 R.string.insert_error,
+                                 Toast.LENGTH_LONG
+                         ).show();
+                     }
+                } catch (JSONException exception) {
+                    Toast.makeText(
+                            MainActivity.this,
+                            exception.toString(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+            }
+
+            bar.setActivated(false);
+            bar.setVisibility(View.INVISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... request) {
+            return Api.execute("addProdutos.php", request);
+        }
     }
 
     private class ProductSearch extends AsyncTask<String, String, String> {

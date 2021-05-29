@@ -8,5 +8,7 @@
     <string name="name_is_empty">Please, insert the product name</string>
     <string name="hint_value">Insert the product value here</string>
     <string name="hint_quantity">Insert the product quantity</string>
+    <string name="insert_successful">Product inserted with success</string>
+    <string name="insert_error">Error while trying to insert new product</string>
 
 </resources>

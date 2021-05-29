@@ -9,11 +9,10 @@ public class ProductEntity {
 
     @Override
     public @NotNull String toString() {
-        return "ProductEntity{" +
-                "id=" + id +
+        return "id=" + id +
+                ", name=" + name +
                 ", value=" + value +
-                ", quantity=" + quantity +
-                '}';
+                ", quantity=" + quantity;
     }
 
     public int getId() {
